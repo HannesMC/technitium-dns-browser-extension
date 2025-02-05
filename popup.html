@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Technitium DNS Block Control</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 15px;
+      background-color: #f7f7f7;
+      width: 300px;
+    }
+    /* Header with Logo and Title */
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .header img {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+    }
+    .header .title {
+      margin-left: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 1.2;
+    }
+    /* iOS-like Switch */
+    .toggle-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+    }
+    .ios-switch {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 22px;
+    }
+    .ios-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 22px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #4CAF50;
+    }
+    input:checked + .slider:before {
+      transform: translateX(18px);
+    }
+    /* Dropdown Style */
+    select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    /* Settings Button (Gear) */
+    .settings-btn {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      color: #0073e6;
+      text-decoration: none;
+    }
+    .settings-btn img {
+      width: 20px;
+      height: 20px;
+      margin-right: 6px;
+    }
+    /* Status Text */
+    #blockingStatus {
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <!-- Logo changes dynamically (icon_green.png / icon_red.png) -->
+    <img id="logo" src="icon_green.png" alt="Technitium Logo">
+    <div class="title">
+      Technitium<br>DNS Block Control
+    </div>
+  </div>
+  
+  <!-- Status Display -->
+  <div id="blockingStatus">Loading status...</div>
+  
+  <!-- iOS-like Toggle Switch -->
+  <div class="toggle-container">
+    <span>DNS Blocking</span>
+    <label class="ios-switch">
+      <input type="checkbox" id="toggleSwitch">
+      <span class="slider"></span>
+    </label>
+  </div>
+  
+  <!-- Dropdown for Temporary Disable -->
+  <div style="margin-bottom: 20px;">
+    <label for="tempDuration">Temporarily disable for:</label>
+    <select id="tempDuration">
+      <option value="1">1 Minute</option>
+      <option value="5">5 Minutes</option>
+      <option value="15">15 Minutes</option>
+      <option value="30">30 Minutes</option>
+      <option value="60">60 Minutes</option>
+      <option value="1440">24 Hours</option>
+    </select>
+  </div>
+  
+  <!-- Settings Button (Gear) -->
+  <div class="settings-btn" id="settingsBtn">
+    <img src="icon_gear.png" alt="Settings">
+    <span>Settings</span>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
