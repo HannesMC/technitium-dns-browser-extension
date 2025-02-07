@@ -17,6 +17,11 @@ This browser extension was created as a **proof of concept** with the help of **
 - **Configurable server URL and API token** via the options page.
 - **Intuitive UI with a modern design** for easy control.
 
+## Preview 
+![PreviewBlockingEnabled](./preview_popup_green.png) ![PreviewBlockingDisabled](./preview_popup_red.png)
+![PreviewSettings](./preview_settings.png)
+
+
 ## Installation
 
 ### Load the extension in Chrome (Developer Mode)
