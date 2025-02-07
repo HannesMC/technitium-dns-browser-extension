@@ -9,6 +9,9 @@ This browser extension was created as a **proof of concept** with the help of **
 > [!WARNING]
 > 🚨 **Disclaimer:** This project is experimental and provided "as is" without any guarantees. **Use at your own risk.** The author assumes no responsibility for any issues arising from its usage.
 
+> [!NOTE]
+> This project is a proof of concept and is **not actively maintained**.
+
 ## Features
 
 - **Temporarily disable blocking** for predefined durations (1 min, 5 min, 15 min, etc.).
