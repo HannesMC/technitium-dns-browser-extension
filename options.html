@@ -19,14 +19,48 @@
     }
     h1 { font-size: 22px; margin-bottom: 15px; }
     label { display: block; margin: 10px 0 5px; }
-    input { width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; }
-    button { padding: 10px 15px; margin: 5px 0; }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 15px;
+      margin: 0;
+    }
     .status {
       font-weight: bold;
       margin-top: 10px;
     }
     .status.success { color: green; }
     .status.error { color: red; }
+
+    .button-row {
+      display: flex;
+      gap: 2rem; 
+      margin-top: 10px;
+      align-items: center;
+    }
+
+    .poc-box {
+      margin-top: 35px; 
+      text-align: center;
+      font-size: 13px;
+    }
+    .poc-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .poc-version.ok {
+      color: #28a745;
+    }
+    .poc-version.outdated {
+      color: #d9534f;
+    }
+    .poc-uptime {
+      margin-top: 3px;
+    }
   </style>
 </head>
 <body>
@@ -46,9 +80,18 @@
       <label for="token">Token:</label>
       <input type="text" id="token" placeholder="API Token eingeben">
       
-      <button id="saveBtn">Save</button>
+      <div class="button-row">
+        <button id="saveBtn">Save</button>
+        <button id="checkUpdateBtn">Update Check</button>
+      </div>
       
       <div id="connectionStatus" class="status">Connection: unknown</div>
+
+      <div class="poc-box">
+        <div class="poc-title">Technitium DNS Block Control Extension by HannesMC</div>
+        <div id="pocVersion" class="poc-version">Technitium Version: unknown</div>
+        <div id="pocUptime" class="poc-uptime">Server up since: unknown</div>
+      </div>
     </div>
   </div>
   
