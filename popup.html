@@ -82,7 +82,13 @@
       border: 1px solid #ccc;
       border-radius: 4px;
     }
-    /* Settings Button (Gear) */
+    /* Settings + Update row */
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
     .settings-btn {
       display: flex;
       align-items: center;
@@ -95,11 +101,37 @@
       height: 20px;
       margin-right: 6px;
     }
-    /* Status Text */
+    .link-button {
+      background: none;
+      border: none;
+      color: #0073e6;
+      cursor: pointer;
+      font-size: 12px;
+      text-decoration: underline;
+      padding: 0;
+    }
+    .link-button:disabled {
+      color: #999;
+      text-decoration: none;
+      cursor: default;
+    }
+    /* Status Texts */
     #blockingStatus {
       margin-bottom: 10px;
       font-size: 14px;
       font-weight: bold;
+    }
+    .info-text {
+      margin-top: 4px;
+      font-size: 12px;
+      text-align: center;
+    }
+    .info-text.update-available {
+      color: #d9534f;
+      font-weight: bold;
+    }
+    .info-text.ok {
+      color: #28a745;
     }
   </style>
 </head>
@@ -126,7 +158,7 @@
   </div>
   
   <!-- Dropdown for Temporary Disable -->
-  <div style="margin-bottom: 20px;">
+  <div style="margin-bottom: 10px;">
     <label for="tempDuration">Temporarily disable for:</label>
     <select id="tempDuration">
       <option value="1">1 Minute</option>
@@ -137,12 +169,20 @@
       <option value="1440">24 Hours</option>
     </select>
   </div>
+
+  <!-- Countdown für temporäres Blocking -->
+  <div id="countdown" class="info-text"></div>
   
-  <!-- Settings Button (Gear) -->
-  <div class="settings-btn" id="settingsBtn">
-    <img src="icon_gear.png" alt="Settings">
-    <span>Settings</span>
+  <!-- Settings + Update -->
+  <div class="footer-row">
+    <div class="settings-btn" id="settingsBtn">
+      <img src="icon_gear.png" alt="Settings">
+      <span>Settings</span>
+    </div>
+    <button id="checkUpdateBtn" class="link-button">Check update</button>
   </div>
+  <!-- Version / Update-Info in der Mitte -->
+  <div id="updateInfo" class="info-text"></div>
   
   <script src="popup.js"></script>
 </body>
