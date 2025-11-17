@@ -25,6 +25,19 @@ The extension allows you to:
 
 All configuration data (server URL, token, temporary disable info) is stored **locally in the browser** using `chrome.storage.local`. No data is sent anywhere else.
 
+
+<div style="display: flex; justify-content: center; gap: 1rem;">
+  <img src="./preview_settings.png" alt="Preview Settings" width="646px">
+</div>
+
+<br/>
+
+<div style="display: flex; justify-content: center; gap: 1rem;">
+  <img src="./preview_popup_green.png" alt="Preview Popup green" width="330px">
+  <img src="preview_popup_red.png" alt="Preview Popup red" width="330px">
+</div>
+
+
 ---
 
 ## Features
