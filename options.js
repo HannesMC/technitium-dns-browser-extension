@@ -7,12 +7,21 @@ let pocState = {
 };
 
 // Helper function: if necessary, add http:// and port :5380 if not available.
+// Returns null if the input cannot be parsed as a URL.
 function normalizeServerInput(input) {
   input = input.trim();
   if (!input.startsWith("http://") && !input.startsWith("https://")) {
     input = "http://" + input;
   }
-  const url = new URL(input);
+  let url;
+  try {
+    url = new URL(input);
+  } catch {
+    return null;
+  }
+  if (!url.hostname) {
+    return null;
+  }
   if (!url.port) {
     url.port = "5380";
   }
@@ -71,7 +80,7 @@ function updatePocInfo(partialUpdate) {
 // Check connection to the API and update status via /api/settings/get
 async function checkConnection(server, token) {
   const statusEl = document.getElementById("connectionStatus");
-  const url = `${server}/api/settings/get?token=${token}`;
+  const url = `${server}/api/settings/get?token=${encodeURIComponent(token)}`;
 
   try {
     const response = await fetch(url, { mode: "cors" });
@@ -124,7 +133,7 @@ async function checkForUpdateOptions(server, token) {
   button.textContent = "Checking...";
 
   try {
-    const url = `${server}/api/user/checkForUpdate?token=${token}`;
+    const url = `${server}/api/user/checkForUpdate?token=${encodeURIComponent(token)}`;
     const response = await fetch(url, { mode: "cors" });
     if (!response.ok) {
       // leave only version/uptime, no extra text
@@ -197,6 +206,10 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     serverInput = normalizeServerInput(serverInput);
+    if (!serverInput) {
+      alert("The server address is not valid. Please enter an IP or host name.");
+      return;
+    }
 
     chrome.storage.local.set({ server: serverInput, apiKey: token }, () => {
       alert("Settings saved.");
@@ -215,6 +228,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const normalizedServer = normalizeServerInput(serverInputRaw);
+    if (!normalizedServer) {
+      alert("The server address is not valid. Please enter an IP or host name.");
+      return;
+    }
     checkForUpdateOptions(normalizedServer, token);
   });
 });

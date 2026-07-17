@@ -18,7 +18,8 @@ The extension allows you to:
 
 - Toggle **DNS blocking on/off** on your Technitium DNS Server.
 - **Temporarily disable** blocking for a defined amount of time.
-- See the **current blocking status** and icon color directly in the browser toolbar.
+- **Check a single domain** to see whether it is currently blocked (and where), then **block or allow** it with one click.
+- See the **current blocking status** and icon color directly in the browser toolbar (kept up to date in the background).
 - Configure the **server URL** and **API token** via an options page.
 - Run a **connection test** and a **manual update check** for the Technitium DNS Server.
 - View basic **POC information** such as current Technitium version and server uptime.
@@ -47,6 +48,14 @@ All configuration data (server URL, token, temporary disable info) is stored **l
 - **Live blocking status**
   - Text: “Blocking is enabled/disabled.”
   - Toolbar icon and popup logo switch between **green** (blocking enabled) and **red** (blocking disabled).
+  - A background service worker polls the status roughly once a minute (via the `alarms` permission), so the toolbar icon stays current even while the popup is closed.
+- **Domain check & block/allow**
+  - Enter a domain (scheme, path and port are stripped automatically) and click **Check**.
+  - The extension reports whether the domain is currently **blocked** and, on a best-effort basis, **where** — the manual *Blocked Zone*, an external *block list*, or explicitly whitelisted in the *Allowed Zone*.
+  - A single contextual button then appears:
+    - **Block** if the domain is not blocked — adds it to the Blocked Zone (`GET /api/blocked/add`) and removes any allow override.
+    - **Allow** if the domain is blocked — removes it from the Blocked Zone (`GET /api/blocked/delete`) and adds an allow override (`GET /api/allowed/add`), which also overrides external block lists.
+  - Status is determined via the Allowed/Blocked zone listings (`/api/allowed/list`, `/api/blocked/list`) plus a resolve through the server itself (`/api/dnsClient/resolve?server=this-server`). The "where" detection for external block lists is heuristic.
 - **DNS Blocking switch**
   - Permanently enable/disable blocking via  
     `GET /api/settings/set?enableBlocking=<true|false>&token=...`
@@ -98,6 +107,9 @@ All configuration data (server URL, token, temporary disable info) is stored **l
   - `/api/settings/set`
   - `/api/settings/temporaryDisableBlocking`
   - `/api/user/checkForUpdate`
+  - `/api/allowed/list`, `/api/allowed/add`, `/api/allowed/delete`
+  - `/api/blocked/list`, `/api/blocked/add`, `/api/blocked/delete`
+  - `/api/dnsClient/resolve`
 - Chrome / Chromium-based browser with support for **Manifest V3** extensions.
 
 ---
@@ -126,6 +138,7 @@ All configuration data (server URL, token, temporary disable info) is stored **l
 - Use the DNS Blocking switch to permanently enable/disable blocking.
 - Use the Temporarily disable for dropdown to schedule a temporary unblock.
 - Watch the countdown while temporary blocking is active.
+- Use Check domain in block lists to look up a single domain and block or allow it directly.
 4. For server updates:
 - In the popup: click Check update to see if a new Technitium version is available.
 - In the options: click Update Check to update the POC info (version color and status).
@@ -137,6 +150,12 @@ All configuration data (server URL, token, temporary disable info) is stored **l
 - Nevertheless, treat your API token as a secret and restrict its permissions on the server side where possible.
 
 ## Changelog (short)
+
+- 2026-07-17 (v1.1)
+    - Added a **domain check** with one-click block/allow (Allowed/Blocked zone + resolve through the server).
+    - Toolbar icon is now kept in sync in the background via an alarm, not only when the popup opens.
+    - Fixed missing URL-encoding of the API token and query parameters.
+    - Hardened server-address normalization against invalid input (no more unhandled exceptions).
 
 - 2025-11-14
     - Added manual update check in popup and options (/api/user/checkForUpdate).
