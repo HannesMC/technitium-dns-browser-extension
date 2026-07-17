@@ -28,7 +28,7 @@ All configuration data (server URL, token, temporary disable info) is stored **l
 
 
 <p align="center">
-  <img src="./preview_settings.png" alt="Preview Popup green" width="646px" />
+  <img src="./preview_settings.png" alt="Preview Settings" width="85%" />
 </p>
 
 <br/>
