@@ -1,0 +1,27 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Extension build/package output
+*.zip
+*.crx
+*.xpi
+*.pem
+
+# Node (falls später Build-Tooling dazukommt)
+node_modules/
+npm-debug.log*
+yarn-error.log*
+dist/
+build/
+
+# Environment / secrets
+.env
+.env.local
