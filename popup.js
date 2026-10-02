@@ -57,7 +57,6 @@ async function checkBlockingStatus() {
     }
 
     const data = await response.json();
-    console.log("API response (settings/get):", data);
 
     const settings = data.response || data;
     const isBlockingEnabled =
@@ -171,7 +170,6 @@ async function temporaryDisable(minutes) {
     }
 
     const data = await response.json();
-    console.log("API response (temporaryDisableBlocking):", data);
 
     if (
       data.status === "ok" &&
@@ -507,7 +505,6 @@ async function checkForUpdateAndShow() {
     }
 
     const data = await response.json();
-    console.log("API response (checkForUpdate):", data);
 
     if (!data.response || data.status !== "ok") {
       updateInfoEl.textContent = "Update check failed (API error).";

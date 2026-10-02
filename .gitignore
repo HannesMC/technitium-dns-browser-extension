@@ -25,3 +25,6 @@ build/
 # Environment / secrets
 .env
 .env.local
+
+# Security audit
+security-check.md
