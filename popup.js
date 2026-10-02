@@ -327,6 +327,18 @@ async function getBlockingSettings(server, apiKey) {
   }
 }
 
+// Renders a bold headline plus an optional detail line. Uses text nodes only,
+// because the detail can contain data from DNS answers.
+function renderDomainResult(el, headline, detail) {
+  const strong = document.createElement("strong");
+  strong.textContent = headline;
+  if (detail) {
+    el.replaceChildren(strong, document.createElement("br"), detail);
+  } else {
+    el.replaceChildren(strong);
+  }
+}
+
 // Main entry point: checks a domain and renders the result + an action button.
 async function checkDomain() {
   const input = document.getElementById("domainInput");
@@ -393,9 +405,11 @@ async function checkDomain() {
     if (inAllowed) where.push("Allowed Zone (whitelist)");
 
     if (isBlocked) {
-      resultEl.innerHTML =
-        `<strong>"${domain}" is BLOCKED.</strong><br>` +
-        `Source: ${where.length ? where.join(", ") : "unknown"}`;
+      renderDomainResult(
+        resultEl,
+        `"${domain}" is BLOCKED.`,
+        `Source: ${where.length ? where.join(", ") : "unknown"}`
+      );
       resultEl.className = "info-text update-available";
       pendingDomainAction = { mode: "unblock", domain };
       actionBtn.textContent = `Allow "${domain}"`;
@@ -405,11 +419,13 @@ async function checkDomain() {
       const note = inAllowed
         ? " (explicitly whitelisted in the Allowed Zone)"
         : "";
-      resultEl.innerHTML =
-        `<strong>"${domain}" is NOT blocked${note}.</strong>` +
-        (resolved.detail && resolved.status === "allowed"
-          ? `<br>Resolves to: ${resolved.detail}`
-          : "");
+      renderDomainResult(
+        resultEl,
+        `"${domain}" is NOT blocked${note}.`,
+        resolved.detail && resolved.status === "allowed"
+          ? `Resolves to: ${resolved.detail}`
+          : null
+      );
       resultEl.className = "info-text ok";
       pendingDomainAction = { mode: "block", domain };
       actionBtn.textContent = `Block "${domain}"`;
