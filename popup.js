@@ -101,9 +101,9 @@ async function toggleBlockingPermanent(enable) {
   const { server, apiKey } = await loadSettings();
   if (!server || !apiKey) return;
 
-  // Wenn man Blocking manuell auf Enabled setzt → Countdown sofort stoppen
+  // Manually enabling blocking ends any running countdown immediately
   if (enable) {
-    stopCountdown(true); // Timer + Storage aufräumen
+    stopCountdown(true); // clear timer and storage
   }
 
   try {
